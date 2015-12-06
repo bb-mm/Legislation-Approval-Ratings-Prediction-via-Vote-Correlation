@@ -1,0 +1,371 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Jacobs Landscape Poster
+% LaTeX Template
+% Version 1.1 (14/06/14)
+%
+% Created by:
+% Computational Physics and Biophysics Group, Jacobs University
+% https://teamwork.jacobs-university.de:8443/confluence/display/CoPandBiG/LaTeX+Poster
+% 
+% Further modified by:
+% Nathaniel Johnston (nathaniel@njohnston.ca)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[final]{beamer}
+
+\usepackage[scale=1.24]{beamerposter} % Use the beamerposter package for laying out the poster
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage{url}
+
+\usetheme{confposter} % Use the confposter theme supplied with this template
+
+\setbeamercolor{block title}{fg=ngreen,bg=white} % Colors of the block titles
+\setbeamercolor{block body}{fg=black,bg=white} % Colors of the body of blocks
+\setbeamercolor{block alerted title}{fg=white,bg=dblue!70} % Colors of the highlighted block titles
+\setbeamercolor{block alerted body}{fg=black,bg=dblue!10} % Colors of the body of highlighted blocks
+% Many more colors are available for use in beamerthemeconfposter.sty
+
+%-----------------------------------------------------------
+% Define the column widths and overall poster size
+% To set effective sepwid, onecolwid and twocolwid values, first choose how many columns you want and how much separation you want between columns
+% In this template, the separation width chosen is 0.024 of the paper width and a 4-column layout
+% onecolwid should therefore be (1-(# of columns+1)*sepwid)/# of columns e.g. (1-(4+1)*0.024)/4 = 0.22
+% Set twocolwid to be (2*onecolwid)+sepwid = 0.464
+% Set threecolwid to be (3*onecolwid)+2*sepwid = 0.708
+
+\newlength{\sepwid}
+\newlength{\onecolwid}
+\newlength{\twocolwid}
+\newlength{\threecolwid}
+\setlength{\paperwidth}{48in} % A0 width: 46.8in
+\setlength{\paperheight}{36in} % A0 height: 33.1in
+\setlength{\sepwid}{0.024\paperwidth} % Separation width (white space) between columns
+\setlength{\onecolwid}{0.22\paperwidth} % Width of one column
+\setlength{\twocolwid}{0.464\paperwidth} % Width of two columns
+\setlength{\threecolwid}{0.708\paperwidth} % Width of three columns
+\setlength{\topmargin}{-0.5in} % Reduce the top margin size
+%-----------------------------------------------------------
+
+\usepackage{graphicx}  % Required for including images
+
+\usepackage{booktabs} % Top and bottom rules for tables
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION 
+%----------------------------------------------------------------------------------------
+
+\title{Legislation approval ratings prediction via vote correlation} % Poster title
+
+\author{Yuan Deng, Junyang Gao, Xiaoxue Wang} % Author(s)
+
+\institute{Computer Science Department, Duke University} % Institution(s)
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\addtobeamertemplate{block end}{}{\vspace*{2ex}} % White space under blocks
+\addtobeamertemplate{block alerted end}{}{\vspace*{2ex}} % White space under highlighted (alert) blocks
+
+\setlength{\belowcaptionskip}{2ex} % White space under figures
+\setlength\belowdisplayshortskip{2ex} % White space under equations
+
+\begin{frame}[t] % The whole poster is enclosed in one beamer frame
+
+\begin{columns}[t] % The whole poster consists of three major columns, the second of which is split into two columns twice - the [t] option aligns each column's content to the top
+
+\begin{column}{\sepwid}\end{column} % Empty spacer column
+
+\begin{column}{\onecolwid} % The first column
+
+%----------------------------------------------------------------------------------------
+%	OBJECTIVES
+%----------------------------------------------------------------------------------------
+
+\begin{alertblock}{Objectives}
+
+We implement the machine learning techniques, including topic modeling, support vector classification, and spectral partitioning, to predict the legislation approval ratings. 
+
+\quad \\
+
+Our novelty is to incorporate a new feature called \textbf{vote correlation}, which represents the voting similarities / correlations between two voters. 
+
+\end{alertblock}
+
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+
+\begin{block}{Data Description}
+     The data we used are crawled from open-source datasets from the web. %Dataset simple statistics:
+     
+     \quad \\
+     
+     \begin{table}
+         \centering
+         \begin{tabular}{|l|r|}
+             \hline
+             Vote & 12348 \\
+             \hline
+             Voter & 955 \\
+             \hline
+             Total Votes by voters~~~~~~~~~~~~~ & 12592 \\ 
+             \hline
+         \end{tabular}
+         \caption{Dataset statistics}
+     \end{table}
+\end{block}
+
+\begin{block}{Outline of Algorithm}
+
+Different from the traditional way of prediction, in which based on the voting history of each voter, the system simply predicts the vote for the new legislation, our system works as follows:     \begin{enumerate}         
+        \item For each pair of voters, compute vote correlations;        \item Classify voters into two groups by vote correlations;        \item Predict the aggregate vote of the two groups;
+    \end{enumerate}
+
+Generally, our algorithm incorporates following ingredients and techniques:
+\begin{itemize}
+    \item Feature extraction for votes and bills \\ Tech: (topic modeling \cite{graham2012getting});
+    \item Vote correlation computation \\ Tech: (support vector classification (SVC) \cite{hsu2003practical});
+    \item Group partition \\ Tech: (spectral partitioning of graphs \cite{mcsherry2001spectral,kumar2010clustering});
+    \item Aggregate voting \\ Tech: (majority rules \cite{mcgann2004tyranny} and SVC);
+\end{itemize}
+
+\end{block}
+
+%----------------------------------------------------------------------------------------
+
+\end{column} % End of the first column
+
+\begin{column}{\sepwid}\end{column} % Empty spacer column
+
+\begin{column}{\onecolwid} % Begin a column which is two columns wide (column 2)
+
+%----------------------------------------------------------------------------------------
+%	MATERIALS
+%----------------------------------------------------------------------------------------
+
+\begin{block}{Feature Extraction}
+
+    To turn a legislation (a.k.a a bill) $b \in B$, to a law, U.S. government conducts several rounds of votes $v \in V_b$ for the corresponding bill $b \in B$. 
+    
+    \quad \\
+    
+    We extract the feature of a vote by running topic modeling on the description of bills and votes separately to get feature vectors for bill $b \in B$ and vote $v \in V$ as $F_b$ and $F_v$.
+    
+    \quad \\
+    
+    Finally, the feature vector of a specific vote $v \in V_b$ is the concatenation of $F_b$ and $F_v$.
+    \[
+        G_v = F_v \circ F_b
+    \]
+    
+\end{block}
+
+%------------------------------------------------
+
+\begin{block}{Compute Vote Correlation}
+
+    For voter $a$ and $b$, select the votes that both of them participated as $V_{a,b}$. Our objective is to train a model to predict whether voter $a$ and $b$ have the same opinion for a new vote. 
+    
+    \quad \\
+    
+    We model the problem as a classification problem as follows: for each $v \in V_{a,b}$, 
+    \begin{itemize}
+        \item let $x_v = G_v$;
+        \item $y_v = 1$ if and only if $a$ and $b$ have the same vote for $v$; otherwise, $y_v = 0$;    
+    \end{itemize}
+    
+    \quad \\
+    
+    We run a support vector classification with radial basis function kernel to obtain a classifier.
+    
+\end{block}
+
+%----------------------------------------------------------------------------------------
+%	MATHEMATICAL SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{block}{Group Partitioning}
+
+    Applying the classifier obtained by vote correlation computation, we can compute a matrix such that $M_{i,j} = 1$ if and only if we predict voter $i$ and $j$ have the same opinion for the considered vote.
+
+    \quad \\
+    
+    In order to partition the group into two groups, we use {\em spectral partitioning of random graphs} 
+    \begin{enumerate}
+        \item Compute singular value decomposition of $M$;
+        \item Recover the group members according to the top two eigenvectors;
+    \end{enumerate}
+
+\end{block}
+
+%----------------------------------------------------------------------------------------
+
+\end{column} % End of column 2.1
+
+\begin{column}{\sepwid}\end{column} % Empty spacer column
+
+\begin{column}{\onecolwid} % The second column within column 2 (column 2.2)
+
+%----------------------------------------------------------------------------------------
+%	METHODS
+%----------------------------------------------------------------------------------------
+
+\begin{block}{Aggregate voting}
+
+    After partitioning voters into two groups $A$ and $B$, we treat each group as a super-voter (aggregate by majority rule) and predict its vote.
+    
+    \quad \\
+    
+    Again, we model the problem as a classification problem as follows: for each vote $v$
+    \begin{itemize}
+        \item let $x_v = G_v$;
+        \item as for $y_v$:
+            \begin{itemize}
+                \item if more than two thirds of voters vote for {\em yes}, then $y_v = 1$;
+                \item if more than two thirds of voters vote for {\em no}, then $y_v = 0$;
+                \item otherwise, discard $v$;
+            \end{itemize}
+    \end{itemize}
+    
+    \quad \\
+ 
+    We run a support vector classification with radial basis function kernel to obtain a classifier.
+
+\end{block}
+
+%----------------------------------------------------------------------------------------
+%	RESULTS
+%----------------------------------------------------------------------------------------
+
+\begin{block}{Experiments Setup}
+    
+    Due to computational complexity, it is impossible for us to run an experiment on the entire data sets. Thus, for each input of new vote, we select only $50$ voters and predict the results among these $50$ voters. 
+
+\end{block}
+
+\begin{block}{Results and Discussion}
+    We use {\em leave-one-out cross-validation} to measure the performance of our algorithm and the correctness rate of our algorithm is roughly $72\%$ and the precision / recall matrix is as follows:
+    
+    \quad \\
+    
+    \begin{table}
+        \centering
+        \begin{tabular}{|c|c|c|}
+            \hline
+              & ~~~~0~~~~ & ~~~~1~~~~ \\
+            \hline
+            ~~~~0~~~~ & 261 & 83 \\
+            \hline
+            ~~~~1~~~~ & 120 & 262 \\
+            \hline
+        \end{tabular}
+        \caption{Precision / recall matrix}
+    \end{table}
+    
+    
+    The correct rate is acceptable but there is a huge space for further improvement. Several possible ways may include
+    \begin{itemize}
+        \item Use a better topic modeling to extract the features of votes;
+        \item Use other model to train the classifier than SVC;
+        \item In aggregate voting, maybe other rules than majority rule can be implemented;
+    \end{itemize}
+
+\end{block}
+
+
+
+%----------------------------------------------------------------------------------------
+
+\end{column} % End of the second column
+
+\begin{column}{\sepwid}\end{column} % Empty spacer column
+
+\begin{column}{\onecolwid} % The third column
+
+%----------------------------------------------------------------------------------------
+%	CONCLUSION
+%----------------------------------------------------------------------------------------
+
+\begin{block}{Conclusion}
+
+We successfully incorporate several machine learning techniques to develop a new way for legislation approval ratings predictions. Different than the traditional method, we examine the second order information, vote correlation between pairs of voters to improve the performance of algorithms.  
+
+\end{block}
+
+%----------------------------------------------------------------------------------------
+%	REFERENCES
+%----------------------------------------------------------------------------------------
+
+\begin{block}{References}
+
+\nocite{*} % Insert publications even if they are not cited in the poster
+\small{\bibliographystyle{unsrt}
+\bibliography{sample}\vspace{0.75in}}
+
+\end{block}
+
+%----------------------------------------------------------------------------------------
+%	ACKNOWLEDGEMENTS
+%----------------------------------------------------------------------------------------
+
+%\setbeamercolor{block title}{fg=red,bg=white} % Change the block title color
+
+%\begin{block}{Acknowledgements}
+
+%\small{\rmfamily{Nam mollis tristique neque eu luctus. Suspendisse rutrum congue nisi sed convallis. Aenean id neque dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.}} \\
+
+%\end{block}
+
+%----------------------------------------------------------------------------------------
+%	CONTACT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\setbeamercolor{block alerted title}{fg=black,bg=norange} % Change the alert block title colors
+\setbeamercolor{block alerted body}{fg=black,bg=white} % Change the alert block body colors
+
+\begin{alertblock}{Contact Information}
+
+\begin{itemize}
+\item Website: 
+    \begin{itemize}
+        \item \href{http://cs.duke.edu/~ericdy}{\url{http://cs.duke.edu/~ericdy}}
+        \item \href{http://cs.duke.edu/~jygao}{\url{http://cs.duke.edu/~jygao}}
+    \end{itemize}
+\item Email: 
+    \begin{itemize}
+        \item \href{mailto:ericdy@cs.duke.edu}{ericdy@cs.duke.edu}
+        \item \href{mailto:jygao@cs.duke.edu}{jygao@cs.duke.edu}
+        \item \href{mailto:xxw211@cs.duke.edu}{xxw211@cs.duke.edu}
+    \end{itemize}
+\end{itemize}
+
+\end{alertblock}
+
+\begin{center}
+\begin{tabular}{ccc}
+\includegraphics[width=0.4\linewidth]{duke_logo_6.png} & \hfill & \includegraphics[width=0.4\linewidth]{duke_cs_logo_huge.png}
+\end{tabular}
+\end{center}
+
+%----------------------------------------------------------------------------------------
+
+\end{column} % End of the third column
+
+\end{columns} % End of all the columns in the poster
+
+\end{frame} % End of the enclosing frame
+
+\end{document}

@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d (TeX Live 2014)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: final_project.aux
+The style file: unsrt.bst
+Database file #1: ../sample.bib
+A bad cross reference---entry "conf/icml/AroraGHMMSWZ13"
+refers to entry "conf/icml/2013", which doesn't exist
+Warning--I didn't find a database entry for "conf/icml/2013"
+You've used 9 entries,
+            1791 wiz_defined-function locations,
+            504 strings with 5165 characters,
+and the built_in function-call counts, 2376 in all, are:
+= -- 225
+> -- 90
+< -- 5
++ -- 34
+- -- 25
+* -- 140
+:= -- 344
+add.period$ -- 29
+call.type$ -- 9
+change.case$ -- 9
+chr.to.int$ -- 0
+cite$ -- 9
+duplicate$ -- 114
+empty$ -- 236
+format.name$ -- 25
+if$ -- 561
+int.to.chr$ -- 0
+int.to.str$ -- 9
+missing$ -- 7
+newline$ -- 47
+num.names$ -- 8
+pop$ -- 37
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 70
+stack$ -- 0
+substring$ -- 158
+swap$ -- 46
+text.length$ -- 5
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 23
+width$ -- 10
+write$ -- 100
+(There was 1 error message)
