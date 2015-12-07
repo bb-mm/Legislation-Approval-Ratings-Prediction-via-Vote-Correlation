@@ -1,6 +1,13 @@
 \documentclass{article} % For LaTeX2e
 \usepackage{final_project,times}
 \usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usetikzlibrary{graphs,graphs.standard}
+
 %\documentstyle[nips12submit_09,times,art10]{article} % For LaTeX 2.09
 
 
@@ -52,14 +59,71 @@ We implement the machine learning techniques, including topic modeling, support 
         \item Action by the President
         \item Overriding a Veto
     \end{itemize}
-    Intuitively, to turn a bill into a law, there are several rounds of votes to decide whether the clauses or properties of the bills are acceptable or not. We focus on the votes, the ``floor debate and votes'' sub-process, to predict the voting results. In order to predict results, one straightforward way is to predict each voter's vote according to their voting history and aggregate their votes to form an outcome. However, we attempt another way to formulate the problem and introduce a new concept, called {\em vote correlation} to make use of the second order information in order to improve our prediction.
-    
+    Intuitively, to turn a bill into a law, there are several rounds of votes to decide whether the clauses or properties of the bills are acceptable or not. We focus on the votes, the ``floor debate and votes'' sub-process, to predict the voting  results. In order to predict results, one straightforward way is to predict each voter's vote according to their voting history and aggregate their votes to form an outcome. However, we attempt another way to formulate the problem and introduce a new concept, called {\em vote correlation} to make use of the second order information in order to improve our prediction.
+
+\section{Related work}
+
+Related works in the similar topic was done by Yano, Smith and Wilkerson\cite{textual} and Zach Cain, Pamela Chua and Kristian Gampong\cite{stanford}. Yano\cite{textual} mainly focused on exploring textual features on legislation bill/vote to predict its survival in Congressional committees. While Zach\cite{stanford} learned from individual voter's voting record to make the prediction. In our project, besides exploring textual features on legislation bill/vote, we will use vote correlation between each pair of congressmen. Our new prediction model and methodology differs significantly from their work. Our experiment result (Section 6) has shown that our prediction model can achieve a high accuracy.
+
 \section{Outline of our algorithm}
 Different from the traditional way of prediction, in which based on the voting history of each voter, the system simply predicts the vote for the new legislation, our system works as follows:     
     \begin{enumerate}         
-        \item For each pair of voters, compute vote correlations;        \item Classify voters into two groups by vote correlations;        \item Predict the aggregate vote of the two groups;
+        \item For each pair of voters, compute vote correlations;
+        \item Classify voters into two groups by vote correlations;
+        \item Predict the aggregate vote of the two groups;
     \end{enumerate}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \begin{tikzpicture}
+  \graph { subgraph K_n [n=8,clockwise,radius=2cm] };
+  \end{tikzpicture}
+  \caption{compute all-pair vote correlation/similarities}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \begin{tikzpicture}
+    [
+        main node/.style={circle, draw, inner sep=0pt, minimum width=3pt, fill=black}
+    ]
+
+    \node [main node] (1) at (-1, 2.5) {};
+    \node [main node] (2) at (1, 2.5) {};
+    \node [main node] (3) at (-1, 1.5) {};
+    \node [main node] (4) at (1, 1.5) {};
+    \node [main node] (7) at (-1, -0.5) {};
+    \node [main node] (8) at (-1, -1.5) {};
+    \node [main node] (5) at (-1, 0.5) {};
+    \node [main node] (6) at (1, 0.5) {};
+
+    \draw (-1.1, 2.5) node[left] {$1$};
+    \draw (1.1, 2.5) node[right] {$6$};
+    \draw (-1.1, 1.5) node[left] {$2$};
+    \draw (1.1, 1.5) node[right] {$7$};
+    \draw (-1.1, 0.5) node[left] {$3$};
+    \draw (1.1, 0.5) node[right] {$8$};
+    \draw (-1.1, -0.5) node[left] {$4$};
+    \draw (-1.1, -1.5) node[left] {$5$};
+
+
+    \draw (-1, 2.5) circle (5pt);
+    \draw (-1, 1.5) circle (5pt);
+    \draw (-1, 0.5) circle (5pt);
+    \draw (-1, -0.5) circle (5pt);
+    \draw (-1, -1.5) circle (5pt);
+    \end{tikzpicture}
     
+  \caption{Partition voters into two groups according to their vote correlation matrix.}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{An example of legislation approval rating prediction process with 8 voters}
+\label{fig:test}
+\end{figure}
+ 
+
 \section{Problem Formulation}
     Assume the set of bills is $\mathcal B$ while the set of votes are $\mathcal V$. Moreover, each vote is corresponding to a bill, and thus, we denote $\mathcal V_b \subseteq \mathcal V$ as the set of votes corresponding to a specific bill $b \in \mathcal B$. Let $F_b$ and $F_v$ represents the feature vector of bill $b \in \mathcal B$ and $v \in \mathcal V$, respectively. In addition, we concatenate the two feature vector to get the real feature vector of a vote, which is $G_v = F_v \circ F_b$.
     

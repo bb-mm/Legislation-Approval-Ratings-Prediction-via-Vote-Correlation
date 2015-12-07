@@ -1,0 +1,65 @@
+\begin{thebibliography}{10}
+
+\bibitem{billToLaw}
+Steps in making a bill a law: The federal legislative process.
+\newblock \url{https://www.naeyc.org/policy/federal/bill_law}.
+\newblock [Online; accessed 05-Dec-2015].
+
+\bibitem{textual}
+John D.~Wilkerson Tae~Yano, Noah A.~Smith.
+\newblock Textual predictors of bill survival in congressional committees.
+\newblock {\em Conference of the North American Chapter of the Association for
+  Computational Linguistics: Human Language Technologies}, pages 793--802,
+  2012.
+
+\bibitem{stanford}
+Kristian~Gampong Zach~Cain, Pamela~Chua.
+\newblock Predicting congressional bill outcomes.
+\newblock {\em Course project report for Stanford CS229}.
+
+\bibitem{graham2012getting}
+Shawn Graham, Scott Weingart, and Ian Milligan.
+\newblock Getting started with topic modeling and mallet.
+\newblock {\em The Programming Historian}, 2, 2012.
+
+\bibitem{conf/icml/AroraGHMMSWZ13}
+Sanjeev Arora, Rong Ge, Yonatan Halpern, David~M. Mimno, Ankur Moitra, David
+  Sontag, Yichen Wu, and Michael Zhu.
+\newblock A practical algorithm for topic modeling with provable guarantees.
+\newblock In {\em ICML (2)}, volume~28 of {\em JMLR Proceedings}, pages
+  280--288. JMLR.org, 2013.
+
+\bibitem{hsu2003practical}
+Chih-Wei Hsu, Chih-Chung Chang, Chih-Jen Lin, et~al.
+\newblock A practical guide to support vector classification, 2003.
+
+\bibitem{mcsherry2001spectral}
+Frank McSherry.
+\newblock Spectral partitioning of random graphs.
+\newblock In {\em Foundations of Computer Science, 2001. Proceedings. 42nd IEEE
+  Symposium on}, pages 529--537. IEEE, 2001.
+
+\bibitem{kumar2010clustering}
+Amit Kumar and Ravindran Kannan.
+\newblock Clustering with spectral norm and the k-means algorithm.
+\newblock In {\em Foundations of Computer Science (FOCS), 2010 51st Annual IEEE
+  Symposium on}, pages 299--308. IEEE, 2010.
+
+\bibitem{mcgann2004tyranny}
+Anthony~J McGann.
+\newblock The tyranny of the supermajority how majority rule protects
+  minorities.
+\newblock {\em Journal of Theoretical Politics}, 16(1):53--77, 2004.
+
+\bibitem{blei2003latent}
+David~M Blei, Andrew~Y Ng, and Michael~I Jordan.
+\newblock Latent dirichlet allocation.
+\newblock {\em the Journal of machine Learning research}, 3:993--1022, 2003.
+
+\bibitem{dempster1977maximum}
+Arthur~P Dempster, Nan~M Laird, and Donald~B Rubin.
+\newblock Maximum likelihood from incomplete data via the em algorithm.
+\newblock {\em Journal of the royal statistical society. Series B
+  (methodological)}, pages 1--38, 1977.
+
+\end{thebibliography}
